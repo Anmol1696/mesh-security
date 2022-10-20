@@ -32,4 +32,19 @@ we have various strategies first that is hard to test out, having to do with mul
   exists. But if someone wants to test, something like mesh security, they basically ask us to run a
   a simulate environment, same as the testnet, and then provide the endpoints to them, there they can
   can test out there systems and applications. Users of this would be teams building out the chains itself.
-* 
+
+## Testing
+For writing the tests and the setup, there are 3 kinds of sripts that are needed:
+* Initialization scripts: Bash scripts used to initialize the multichain setup itself
+  * Genesis creation script
+  * Config setup script
+  * Mostly written in bash
+* State change functions: These are functions that do txns to get the blockchain to a particular state. Down the line
+  these functions will also serve the purpose of running hazy tests
+  * Creation of pools
+  * Send data from one address to another
+  * Can be written in any language, initally in js
+* Test assertion functions: These are similar to state change function, but will have a callback function which will
+  assert the state of the multichain itself
+  * Similar to pytests
+  * Can be written in any language, initally in js

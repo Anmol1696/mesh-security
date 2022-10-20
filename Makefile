@@ -1,11 +1,21 @@
-PROCESS=osmosis
-KUBECONTEXT=$(shell kubectl config current-context)
+###############################################################################
+###                              Port forward                              ###
+###############################################################################
 
-SHELL := /bin/bash
+.PHONY: port-forward
+port-forward:
+	kubectl port-forward pods/osmosis-genesis-0 26653:26657 &
+	kubectl port-forward pods/wasmd-genesis-0 26659:26657 &
 
-# Set cluster based on kubeconfig context
-# TODO: need to make switching between different namespaces as seemless as possible
-CLUSTER=$(KUBECONTEXT)
+.PHONY: stop-forward
+stop-forward:
+	-pkill -f "port-forward"
+
+.PHONY: check-forward
+check-forward:
+	while true ; do nc -vz 127.0.0.1 26653 && nc -vz 127.0.0.1 26659 ; sleep 10 ; done
+
+clean: stop-forward
 
 ###############################################################################
 ###                              Local Setup                                ###
@@ -56,21 +66,11 @@ clean: clean-kind
 	-@rm ./kind ./kubectl 2> /dev/null
 
 ###############################################################################
-###                              K8s commands                               ###
+###                              Install Charts                             ###
 ###############################################################################
+CHART_REPO = https://github.com/Anmol1696/kubeshuttle
 
-apply:
-	kubectl apply -k $(CLUSTER)/$(PROCESS)
-
-apply-all:
-	$(MAKE) apply PROCESS=osmosis
-	$(MAKE) apply PROCESS=juno
-	$(MAKE) apply PROCESS=relayer
-
-delete:
-	kubectl delete -k $(CLUSTER)/$(PROCESS) --force
-
-delete-all:
-	-@$(MAKE) delete PROCESS=osmosis
-	-@$(MAKE) delete PROCESS=juno
-	-@$(MAKE) delete PROCESS=relayer
+install-chart:
+	helm repo add stable $(CHART_REPO)
+	helm repo update
+	helm pull stable/devnet --untar

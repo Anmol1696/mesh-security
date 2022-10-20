@@ -6,10 +6,10 @@ import { Order } from "cosmjs-types/ibc/core/channel/v1/channel";
 
 const pprint = (x: unknown) => console.log(JSON.stringify(x, undefined, 2));
 
-const { osmosis: oldOsmo, setup, wasmd } = testutils;
-const osmosis = { ...oldOsmo, minFee: "0.025uosmo" };
+const { setup } = testutils;
 
 import { MetaStakingClient } from "./bindings/MetaStaking.client";
+import { osmosis, wasmd } from "./utils";
 import { assertPacketsFromB, IbcVersion, setupContracts, setupOsmosisClient, setupWasmClient } from "./utils";
 
 let wasmIds: Record<string, number> = {};
@@ -32,7 +32,7 @@ test.before(async (t) => {
   };
   const osmosisSign = await setupOsmosisClient();
   osmosisIds = await setupContracts(osmosisSign, osmosisContracts);
-
+  console.debug("Done with uploading contracts");
   t.pass();
 });
 
@@ -56,7 +56,9 @@ interface SetupInfo {
 async function demoSetup(): Promise<SetupInfo> {
   // create a connection and channel
   const [src, dest] = await setup(wasmd, osmosis);
+  // TODO: This can be createWithExistingConnections, if we can fetch the connections between the chain before hand
   const link = await Link.createWithNewConnections(src, dest);
+  // TODO: Use coustom mnemonics for both the clients in the facuet
   const osmoClient = await setupOsmosisClient();
   const wasmClient = await setupWasmClient();
 
@@ -237,7 +239,7 @@ test.serial("Happy Path (cross-stake / cross-unstake)", async (t) => {
   const { wasmClient, osmoClient, wasmMeshConsumer, osmoMeshProvider, osmoMeshLockup, wasmMetaStaking, link } =
     await demoSetup();
 
-  const fundsAvailableForStaking = { amount: "100000", denom: "ustake" };
+  const fundsAvailableForStaking = { amount: "100000", denom: "stake" };
 
   // Fund meta staking module
   const funding_res = await wasmClient.sign.sendTokens(

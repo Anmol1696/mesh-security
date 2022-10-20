@@ -1,4 +1,0 @@
-namespace: dev-hackwasm
-
-resources:
-  - ../../base/osmosis
