@@ -16,7 +16,7 @@ export const wasmd = {
   denomStaking: 'stake',
   denomFee: 'stake',
   minFee: '0.025stake',
-  blockTime: 2500,
+  blockTime: 1500,
   faucet: {
     mnemonic: 'enlist hip relief stomach skate base shallow young switch frequent cry park',
     pubkey0: {
@@ -26,8 +26,8 @@ export const wasmd = {
     address0: 'wasm14qemq0vw6y3gc3u3e0aty2e764u4gs5lndxgyk',
   },
   ics20Port: 'transfer',
-  estimatedBlockTime: 2500,
-  estimatedIndexerTime: 2500,
+  estimatedBlockTime: 1500,
+  estimatedIndexerTime: 1500,
 };
 
 // prettier-ignore
@@ -39,7 +39,7 @@ export const osmosis = {
   denomStaking: 'uosmo',
   denomFee: 'uosmo',
   minFee: '0.030uosmo',
-  blockTime: 2500,
+  blockTime: 1500,
   faucet: {
     mnemonic: 'remain fragile remove stamp quiz bus country dress critic mammal office need',
     pubkey0: {
@@ -49,8 +49,8 @@ export const osmosis = {
     address0: 'osmo1lvrwcvrqlc5ktzp2c4t22xgkx29q3y83hdcc5d',
   },
   ics20Port: 'transfer',
-  estimatedBlockTime: 2500,
-  estimatedIndexerTime: 2500,
+  estimatedBlockTime: 1500,
+  estimatedIndexerTime: 1500,
 };
 
 export const IbcVersion = "mesh-security-v0.1";
