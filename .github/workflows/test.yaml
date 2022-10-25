@@ -17,7 +17,7 @@ jobs:
           cluster_name: kind-shuttle
 
       - name: Create shuttle cluster
-        uses: deliverybot/helm@v1
+        uses: deliverybot/helm@master
         with:
           release: local-shuttle
           token: ${{ github.token }}
@@ -62,7 +62,7 @@ jobs:
 
       - name: Cleanup shuttle cluster
         if: always()
-        uses: deliverybot/helm@v1
+        uses: deliverybot/helm@master
         with:
           task: remove
           release: local-shuttle
