@@ -28,21 +28,21 @@ jobs:
           helm search repo shuttle/devnet
 
       - name: Create values.yaml
-        run: -|
+        run: |
           cat << EOF > custom-values.yaml
           chains:
-            - name: osmosis-1
-              type: osmosis
-              numValidators: 1
-              ports:
-                rest: 1313
-                rpc: 26653
-            - name: wasmd
-              type: wasmd
-              numValidators: 1
-              ports:
-                rpc: 26659
-                rest: 1319
+          - name: osmosis-1
+            type: osmosis
+            numValidators: 1
+            ports:
+              rest: 1313
+              rpc: 26653
+          - name: wasmd
+            type: wasmd
+            numValidators: 1
+            ports:
+              rpc: 26659
+              rest: 1319
           EOF
           pwd
           cat custom-values.yaml
