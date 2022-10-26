@@ -66,12 +66,6 @@ jobs:
           pwd
           cat custom-values.yaml
 
-      - name: Check resources
-        run: |
-          kubectl get nodes -oyaml
-          free -mh
-          sar -u 2 10
-
       - name: Helm install
         run: |
           helm install -f custom-values.yaml testdevnet shuttle/devnet --wait --debug
