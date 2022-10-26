@@ -50,7 +50,7 @@ jobs:
 
       - name: Helm install
         run: |
-          helm install -f custom-values.yaml testdevnet shuttle/devnet
+          helm install -f custom-values.yaml testdevnet shuttle/devnet --wait
 
       - name: Get pods
         run: |
@@ -60,10 +60,6 @@ jobs:
         run: |
           kubectl port-forward pods/osmosis-1-genesis-0 26653:26657 &
           kubectl port-forward pods/wasmd-genesis-0 26659:26657 &
-
-      - name: Get pods again
-        run: |
-          kubectl get pods
 
       - name: Run tests locally
         run: |
