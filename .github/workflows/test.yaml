@@ -51,7 +51,8 @@ jobs:
       - name: Check resources
         run: |
           kubectl get nodes -oyaml
-          kubectl top node
+          free -mh
+          sar -u 2
 
       - name: Helm install
         run: |
