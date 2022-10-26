@@ -17,9 +17,9 @@ jobs:
           cluster_name: kind-shuttle
 
       - name: Install Helm
-        uses: azure/setup-helm@v1
+        uses: azure/setup-helm@v3
         with:
-          version: v3.8.1
+          version: v3.10.0
 
       - name: Setup shuttle helm repo
         run: |
@@ -38,12 +38,26 @@ jobs:
             ports:
               rest: 1313
               rpc: 26653
+            resources:
+              limits:
+                cpu: "0.5"
+                memory: "1G"
+              requests:
+                cpu: "0.2"
+                memory: "500M"
           - name: wasmd
             type: wasmd
             numValidators: 1
             ports:
               rpc: 26659
               rest: 1319
+            resources:
+              limits:
+                cpu: "0.5"
+                memory: "1G"
+              requests:
+                cpu: "0.2"
+                memory: "500M"
           EOF
           pwd
           cat custom-values.yaml
@@ -52,7 +66,7 @@ jobs:
         run: |
           kubectl get nodes -oyaml
           free -mh
-          sar -u 2
+          sar -u 2 10
 
       - name: Helm install
         run: |
