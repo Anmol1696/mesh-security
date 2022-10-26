@@ -85,11 +85,15 @@ jobs:
           kubectl port-forward pods/osmosis-1-genesis-0 26653:26657 &
           kubectl port-forward pods/wasmd-genesis-0 26659:26657 &
 
-      - name: Run tests locally
+      - name: Build tests
         run: |
           cd tests/
           npm install
           npm run build
+
+      - name: Run tests locally
+        run: |
+          cd tests/
           npm run test
 
       - name: Cleanup shuttle cluster
