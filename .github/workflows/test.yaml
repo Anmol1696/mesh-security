@@ -21,6 +21,10 @@ jobs:
         with:
           version: v3.10.0
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
       - name: Setup shuttle helm repo
         run: |
           helm version
@@ -83,7 +87,6 @@ jobs:
 
       - name: Run tests locally
         run: |
-          sleep 60
           cd tests/
           npm run test
 
