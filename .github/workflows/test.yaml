@@ -23,9 +23,10 @@ jobs:
 
       - name: Setup shuttle helm repo
         run: |
-          helm repo add shuttle https://anmol1696.github.io/shuttle/;
-          helm repo update;
-          helm search repo shuttle/devnet;
+          helm version
+          helm repo add shuttle https://anmol1696.github.io/shuttle
+          helm repo update
+          helm search repo shuttle/devnet
 
       - name: Create values.yaml
         run: |
@@ -48,29 +49,29 @@ jobs:
           cat custom-values.yaml
 
       - name: Helm install
-        run: -|
+        run: |
           helm install -f custom-values.yaml testdevnet shuttle/devnet
 
       - name: Get pods
-        run: -|
+        run: |
           kubectl get pods
 
       - name: Port forward local ports
-        run: -|
+        run: |
           kubectl port-forward pods/osmosis-1-genesis-0 26653:26657 &
           kubectl port-forward pods/wasmd-genesis-0 26659:26657 &
 
       - name: Get pods again
-        run: -|
+        run: |
           kubectl get pods
 
       - name: Run tests locally
-        run: -|
+        run: |
           sleep 60
           cd tests/
           npm run test
 
       - name: Cleanup shuttle cluster
         if: always()
-        run: -|
+        run: |
           helm delete testdevnet
