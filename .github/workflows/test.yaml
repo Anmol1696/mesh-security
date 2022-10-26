@@ -22,10 +22,10 @@ jobs:
           version: v3.8.1
 
       - name: Setup shuttle helm repo
-        run: -|
-          helm repo add shuttle https://anmol1696.github.io/shuttle/
-          helm repo update
-          helm search repo shuttle/devnet
+        run: |
+          helm repo add shuttle https://anmol1696.github.io/shuttle/;
+          helm repo update;
+          helm search repo shuttle/devnet;
 
       - name: Create values.yaml
         run: |
