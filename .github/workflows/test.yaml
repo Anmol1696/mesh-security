@@ -50,7 +50,7 @@ jobs:
 
       - name: Helm install
         run: |
-          helm install -f custom-values.yaml testdevnet shuttle/devnet --wait
+          helm install -f custom-values.yaml testdevnet shuttle/devnet --wait --debug
 
       - name: Get pods
         run: |
