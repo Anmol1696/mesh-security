@@ -48,6 +48,10 @@ jobs:
           pwd
           cat custom-values.yaml
 
+      - name: Check resources
+        run: |
+          kubectl get nodes -oyaml
+
       - name: Helm install
         run: |
           helm install -f custom-values.yaml testdevnet shuttle/devnet --wait --debug
